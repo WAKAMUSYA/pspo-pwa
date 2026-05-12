@@ -29,8 +29,8 @@ export default async function EventsPage() {
             <div className="aspect-[2/1] bg-gray-100 relative">
                <div className="absolute inset-0 bg-yellow-500 opacity-10" />
                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full shadow-sm">
-                 <span className="text-xs font-bold text-gray-900">
-                   {new Date(event.start_date).toLocaleDateString('ja-JP')}
+                 <span className="text-[10px] font-bold text-gray-900 font-mono">
+                   {event.start_date ? new Date(event.start_date).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'}
                  </span>
                </div>
             </div>

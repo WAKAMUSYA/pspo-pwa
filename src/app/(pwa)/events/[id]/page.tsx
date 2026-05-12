@@ -34,8 +34,8 @@ export default async function EventDetailPage({ params }: { params: { id: string
         <div className="space-y-4">
           <div className="space-y-1">
             <h1 className="text-2xl font-bold text-gray-900 leading-tight">{event.title}</h1>
-            <p className="text-yellow-600 font-medium">
-              {new Date(event.event_date).toLocaleDateString('ja-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            <p className="text-yellow-600 font-bold font-mono">
+              {event.start_date ? new Date(event.start_date).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'}
             </p>
           </div>
 
@@ -46,7 +46,9 @@ export default async function EventDetailPage({ params }: { params: { id: string
               </div>
               <div>
                 <p className="text-[10px] text-gray-400 font-bold uppercase">時間</p>
-                <p className="text-sm font-bold">{new Date(event.event_date).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}〜</p>
+                <p className="text-sm font-bold font-mono">
+                  {event.start_date ? new Date(event.start_date).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', hour12: false }) : '--:--'}〜
+                </p>
               </div>
             </div>
             <div className="bg-gray-50 p-4 rounded-2xl flex items-center space-x-3">

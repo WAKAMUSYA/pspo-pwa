@@ -82,8 +82,8 @@ export default async function HomePage() {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded">
                   {notice.category}
                 </span>
-                <span className="text-[10px] text-gray-400">
-                  {new Date(notice.published_at).toLocaleDateString('ja-JP')}
+                <span className="text-[10px] text-gray-400 font-mono">
+                  {notice.published_at ? new Date(notice.published_at).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'}
                 </span>
               </div>
               <h3 className="font-bold text-gray-800 line-clamp-1">{notice.title}</h3>
@@ -114,8 +114,8 @@ export default async function HomePage() {
               {/* Fallback pattern for no image */}
               <div className="absolute inset-0 bg-yellow-500 opacity-20" />
               <div className="absolute bottom-0 left-0 p-4 z-20 text-white w-full">
-                <p className="text-[10px] font-medium text-yellow-400 mb-1">
-                  {new Date(event.start_date).toLocaleDateString('ja-JP')} @ {event.location}
+                <p className="text-[10px] font-bold text-yellow-400 mb-1 font-mono">
+                  {event.start_date ? new Date(event.start_date).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'} @ {event.location}
                 </p>
                 <h3 className="font-bold text-lg group-hover:text-yellow-400 transition-colors">{event.title}</h3>
               </div>

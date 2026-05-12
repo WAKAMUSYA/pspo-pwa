@@ -32,8 +32,8 @@ export default async function NoticeDetailPage({ params }: { params: { id: strin
             {notice.category}
           </span>
           <h1 className="text-2xl font-bold text-gray-900 leading-tight">{notice.title}</h1>
-          <p className="text-sm text-gray-400">
-            {new Date(notice.published_at).toLocaleDateString('ja-JP')}
+          <p className="text-sm text-gray-400 font-mono">
+            {notice.published_at ? new Date(notice.published_at).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'}
           </p>
         </div>
 

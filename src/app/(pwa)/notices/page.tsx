@@ -34,8 +34,8 @@ export default async function NoticesPage() {
                 <span className="text-[10px] font-bold text-yellow-600 uppercase tracking-wider">
                   {notice.category}
                 </span>
-                <span className="text-[10px] text-gray-400">
-                  {new Date(notice.published_at).toLocaleDateString('ja-JP')}
+                <span className="text-[10px] text-gray-400 font-mono">
+                  {notice.published_at ? new Date(notice.published_at).toISOString().split('T')[0].replace(/-/g, '.') : '----.--.--'}
                 </span>
               </div>
               <h3 className="font-bold text-gray-900 mb-1 leading-snug">{notice.title}</h3>
