@@ -1,6 +1,7 @@
 import { protectAdminRoute } from '@/lib/auth-guard'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import { ChevronLeft, Save, Shield } from 'lucide-react'
 
@@ -22,13 +23,19 @@ export default async function MemberEditPage({ params }: { params: Promise<{ id:
     const supabase = await createClient()
     const id = formData.get('id') as string
     
-    await supabase.from('profiles').update({
-      role: formData.get('role'),
-      membership_status: formData.get('membership_status'),
-      home_store: formData.get('home_store'),
+    const { error } = await supabase.from('profiles').update({
+      role: formData.get('role') as string,
+      membership_status: formData.get('membership_status') as string,
+      home_store: formData.get('home_store') as string,
       total_stamps: parseInt(formData.get('total_stamps') as string || '0'),
     }).eq('id', id)
 
+    if (error) {
+      console.error('Update error:', error)
+      // 本当はエラーを表示したいが、一旦リダイレクト
+    }
+
+    revalidatePath('/admin/members')
     redirect('/admin/members')
   }
 
