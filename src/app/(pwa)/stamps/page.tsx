@@ -1,16 +1,26 @@
 import { createClient } from '@/utils/supabase/server'
-import { Stamp, QrCode, ChevronLeft, Info } from 'lucide-react'
+import { Stamp, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
+import StampAction from './StampAction'
 
 export default async function StampsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   
+  // プロフィール情報の取得
   const { data: profile } = await supabase
     .from('profiles')
     .select('total_stamps')
     .eq('id', user?.id)
     .single()
+
+  // スタンプ履歴の取得
+  const { data: history } = await supabase
+    .from('stamp_logs')
+    .select('*')
+    .eq('profile_id', user?.id)
+    .order('created_at', { ascending: false })
+    .limit(10)
 
   const stampCount = profile?.total_stamps || 0
   const maxStamps = 10
@@ -66,34 +76,30 @@ export default async function StampsPage() {
           </div>
         </div>
 
-        {/* Action */}
-        <div className="space-y-4">
-          <button className="w-full flex items-center justify-center space-x-3 py-6 bg-white border-2 border-yellow-400 text-yellow-600 font-bold rounded-3xl shadow-sm hover:bg-yellow-50 transition-all active:scale-[0.98]">
-            <QrCode size={24} />
-            <span>QRコードを読み取る</span>
-          </button>
-          
-          <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-2xl">
-            <Info size={20} className="text-gray-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-gray-500 leading-relaxed">
-              店舗に設置されているQRコードを読み取るとスタンプが貯まります。1日1回まで有効です。
-            </p>
-          </div>
-        </div>
+        {/* Action (QR Scanner) */}
+        <StampAction />
 
-        {/* History Placeholder */}
+        {/* History */}
         <section className="space-y-4 pt-4">
           <h2 className="font-bold text-gray-900">スタンプ履歴</h2>
           <div className="space-y-3">
-             {[1, 2, 3].map(i => (
-               <div key={i} className="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl">
-                 <div>
-                   <p className="font-bold text-sm">来館スタンプ</p>
-                   <p className="text-[10px] text-gray-400">2026.05.{12-i}</p>
-                 </div>
-                 <span className="text-yellow-500 font-bold">+1</span>
-               </div>
-             ))}
+            {history && history.length > 0 ? (
+              history.map(log => (
+                <div key={log.id} className="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl">
+                  <div>
+                    <p className="font-bold text-sm">{log.store_name || '店舗'}来館スタンプ</p>
+                    <p className="text-[10px] text-gray-400">
+                      {new Date(log.created_at).toLocaleDateString('ja-JP')}
+                    </p>
+                  </div>
+                  <span className="text-yellow-500 font-bold">+{log.amount}</span>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-400 text-sm">
+                履歴がありません
+              </div>
+            )}
           </div>
         </section>
       </div>
