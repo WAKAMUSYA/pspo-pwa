@@ -7,17 +7,26 @@ import { signOut } from './actions'
 
 export default async function MyPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  
+  // 1. ユーザー情報の取得（より安全な形式に）
+  const { data, error: authError } = await supabase.auth.getUser()
+  const user = data?.user
 
-  if (!user) {
+  if (authError || !user) {
+    console.error('MyPage Auth Error:', authError)
     redirect('/login')
   }
 
-  const { data: profile } = await supabase
+  // 2. プロフィール情報の取得
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
+
+  if (profileError) {
+    console.warn('MyPage Profile Fetch Warning:', profileError)
+  }
 
   const menuItems = [
     { name: '会員ステータス', icon: ShieldCheck, value: profile?.membership_status || '通常会員' },
