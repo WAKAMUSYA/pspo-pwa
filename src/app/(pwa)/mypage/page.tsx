@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { User, LogOut, Settings, CreditCard, ShieldCheck, ChevronRight, MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function MyPage() {
   const supabase = await createClient()
@@ -72,10 +73,13 @@ export default async function MyPage() {
 
         {/* Logout */}
         <form action={signOut}>
-          <button className="w-full flex items-center justify-center space-x-2 py-4 text-red-500 font-bold bg-red-50 rounded-2xl hover:bg-red-100 transition-colors">
-            <LogOut size={18} />
-            <span>ログアウト</span>
-          </button>
+          <SubmitButton 
+            className="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl hover:bg-red-100 transition-colors"
+            icon={LogOut}
+            loadingText="ログアウト中..."
+          >
+            ログアウト
+          </SubmitButton>
         </form>
       </div>
     </div>
