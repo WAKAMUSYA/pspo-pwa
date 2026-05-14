@@ -38,6 +38,7 @@ export default async function MemberListPage() {
                 <th className="px-6 py-4">会員情報</th>
                 <th className="px-6 py-4">ロール</th>
                 <th className="px-6 py-4">ステータス</th>
+                <th className="px-6 py-4">スタンプ</th>
                 <th className="px-6 py-4">登録日</th>
                 <th className="px-6 py-4">操作</th>
               </tr>
@@ -64,8 +65,11 @@ export default async function MemberListPage() {
                       {member.role || 'member'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-xs font-medium text-gray-600">
-                    {member.membership_status || '通常会員'}
+                  <td className="px-6 py-4">
+                    <div className="flex items-center space-x-1">
+                      <span className="font-bold text-gray-900">{member.total_stamps || 0}</span>
+                      <span className="text-[10px] text-gray-400">個</span>
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-xs text-gray-400">
                     {member.created_at ? new Date(member.created_at).toLocaleDateString('ja-JP') : '---'}

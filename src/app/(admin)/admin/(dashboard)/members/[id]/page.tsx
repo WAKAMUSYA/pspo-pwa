@@ -4,14 +4,15 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft, Save, Shield } from 'lucide-react'
 
-export default async function MemberEditPage({ params }: { params: { id: string } }) {
+export default async function MemberEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: memberId } = await params
   await protectAdminRoute()
   const supabase = await createClient()
 
   const { data: member } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', memberId)
     .single()
 
   if (!member) redirect('/admin/members')
@@ -25,6 +26,7 @@ export default async function MemberEditPage({ params }: { params: { id: string 
       role: formData.get('role'),
       membership_status: formData.get('membership_status'),
       home_store: formData.get('home_store'),
+      total_stamps: parseInt(formData.get('total_stamps') as string || '0'),
     }).eq('id', id)
 
     redirect('/admin/members')
@@ -53,15 +55,30 @@ export default async function MemberEditPage({ params }: { params: { id: string 
         <form action={updateMember} className="p-8 space-y-6">
           <input type="hidden" name="id" value={member.id} />
           
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center">
-              <Shield size={14} className="mr-1" /> 権限ロール
-            </label>
-            <select name="role" defaultValue={member.role} className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-gray-700">
-              <option value="member">メンバー (一般利用者)</option>
-              <option value="staff">スタッフ (コンテンツ管理)</option>
-              <option value="admin">管理者 (全権限)</option>
-            </select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center">
+                <Shield size={14} className="mr-1" /> 権限ロール
+              </label>
+              <select name="role" defaultValue={member.role} className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-gray-700">
+                <option value="member">メンバー (一般利用者)</option>
+                <option value="staff">スタッフ (コンテンツ管理)</option>
+                <option value="admin">管理者 (全権限)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-yellow-600 uppercase tracking-widest flex items-center">
+                スタンプ数
+              </label>
+              <input 
+                type="number"
+                name="total_stamps" 
+                defaultValue={member.total_stamps || 0} 
+                min="0"
+                className="w-full p-4 bg-yellow-50 rounded-2xl border-none focus:ring-2 focus:ring-yellow-400 outline-none font-bold text-yellow-700" 
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
