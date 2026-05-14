@@ -34,12 +34,24 @@ export default function StampScanner({ onScan, onClose }: StampScannerProps) {
         // 読み取り成功
         scanner.clear().then(() => {
           onScan(decodedText)
+        }).catch(err => {
+          console.error('Failed to clear scanner', err)
+          onScan(decodedText) // Clearに失敗してもスキャン結果は返す
         })
       },
       (errorMessage) => {
         // 読み取りエラー（頻繁に出るため無視してOK）
       }
     )
+
+    // エラーハンドリングの追加
+    const originalError = console.error
+    console.error = (...args) => {
+      if (args[0]?.includes?.('Camera access is denied')) {
+        setError('カメラへのアクセスが拒否されました。設定を確認してください。')
+      }
+      originalError.apply(console, args)
+    }
 
     scannerRef.current = scanner
 

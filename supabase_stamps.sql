@@ -15,6 +15,10 @@ ALTER TABLE stamp_logs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can view their own stamp logs." ON stamp_logs
   FOR SELECT USING (auth.uid() = profile_id);
 
+-- ユーザーは自分のスタンプ履歴を挿入可能
+CREATE POLICY "Users can insert their own stamp logs." ON stamp_logs
+  FOR INSERT WITH CHECK (auth.uid() = profile_id);
+
 -- (オプション) 管理者は全てのログを閲覧可能
 CREATE POLICY "Admins can view all stamp logs." ON stamp_logs
   FOR SELECT USING (

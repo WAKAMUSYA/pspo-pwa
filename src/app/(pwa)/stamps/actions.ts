@@ -1,18 +1,24 @@
-'use client'
+'use server'
 
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/utils/supabase/server'
 
 export async function processStampScan(qrData: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   // 1. ユーザー情報の取得
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) return { success: false, error: '認証エラー' }
 
   // 2. QRコードの検証
-  // 全店共通の固定コードをチェック
-  if (qrData !== 'pspo-stamp:gym-visit') {
-    return { success: false, error: '無効なQRコードです' }
+  const sanitizedData = qrData.trim()
+  
+  // 固定コード、またはURLに含まれるコードをチェック
+  const isValid = sanitizedData === 'pspo-stamp:gym-visit' || 
+                  sanitizedData.includes('code=pspo-stamp:gym-visit') ||
+                  sanitizedData.includes('/stamps/pspo-stamp:gym-visit')
+
+  if (!isValid) {
+    return { success: false, error: `無効なQRコードです: ${sanitizedData.substring(0, 20)}${sanitizedData.length > 20 ? '...' : ''}` }
   }
 
   const storeName = 'PSPO24' // 表示用
