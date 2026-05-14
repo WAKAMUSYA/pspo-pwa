@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LayoutDashboard, Users, Bell, Calendar, LogOut, ShieldCheck, ExternalLink } from 'lucide-react'
+import { LayoutDashboard, Users, Bell, Calendar, LogOut, ShieldCheck, ExternalLink, Stamp } from 'lucide-react'
 
 import { protectAdminRoute } from '@/lib/auth-guard'
 
@@ -16,6 +16,7 @@ export default async function AdminLayout({
     { name: '会員管理', href: '/admin/members', icon: Users },
     { name: 'お知らせ管理', href: '/admin/notices', icon: Bell },
     { name: 'イベント管理', href: '/admin/events', icon: Calendar },
+    { name: 'スタンプ管理', href: '/admin/stamps', icon: Stamp },
   ]
 
   return (
