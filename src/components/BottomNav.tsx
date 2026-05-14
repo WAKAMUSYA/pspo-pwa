@@ -20,8 +20,8 @@ export default function BottomNav() {
   if (pathname === '/login' || pathname === '/signup' || pathname === '/tutorial') return null
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 pb-safe">
-      <div className="flex justify-around items-center h-16">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-t border-gray-100 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+      <div className="flex justify-around items-center h-20">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
           const Icon = item.icon
@@ -30,12 +30,22 @@ export default function BottomNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors",
-                isActive ? "text-yellow-500" : "text-gray-500"
+                "flex flex-col items-center justify-center w-full h-full space-y-1.5 transition-all active:scale-90",
+                isActive ? "text-yellow-500" : "text-gray-400"
               )}
             >
-              <Icon size={24} className={cn(isActive && "fill-yellow-100")} />
-              <span className="text-[10px] font-medium">{item.name}</span>
+              <div className={cn(
+                "p-1.5 rounded-xl transition-colors",
+                isActive ? "bg-yellow-50" : "bg-transparent"
+              )}>
+                <Icon size={26} className={cn(isActive && "fill-yellow-500/10")} />
+              </div>
+              <span className={cn(
+                "text-[10px] font-bold tracking-tight",
+                isActive ? "text-yellow-600" : "text-gray-400"
+              )}>
+                {item.name}
+              </span>
             </Link>
           )
         })}

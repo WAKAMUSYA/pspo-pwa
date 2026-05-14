@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { User, LogOut, Settings, CreditCard, ShieldCheck, ChevronRight, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { SubmitButton } from '@/components/SubmitButton'
+import { signOut } from './actions'
 
 export default async function MyPage() {
   const supabase = await createClient()
@@ -17,13 +18,6 @@ export default async function MyPage() {
     .select('*')
     .eq('id', user.id)
     .single()
-
-  const signOut = async () => {
-    'use server'
-    const supabase = await createClient()
-    await supabase.auth.signOut()
-    redirect('/login')
-  }
 
   const menuItems = [
     { name: '会員ステータス', icon: ShieldCheck, value: profile?.membership_status || '通常会員' },
