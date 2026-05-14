@@ -1,22 +1,36 @@
 'use client'
 
 import { useFormStatus } from 'react-dom'
-import { Loader2, LucideIcon } from 'lucide-react'
+import { Loader2, Save, LogOut, Trash2, UserPlus, Shield } from 'lucide-react'
 
 interface SubmitButtonProps {
   children: React.ReactNode
   className?: string
-  icon?: LucideIcon
+  icon?: 'save' | 'logout' | 'delete' | 'add' | 'admin'
   loadingText?: string
 }
 
-export function SubmitButton({ 
+export default function SubmitButton({ 
   children, 
   className = "", 
-  icon: Icon,
+  icon,
   loadingText = "保存中..."
 }: SubmitButtonProps) {
   const { pending } = useFormStatus()
+
+  // アイコン名のマッピング（シリアライズ可能な文字列で受け取る）
+  const getIcon = () => {
+    switch (icon) {
+      case 'save': return Save
+      case 'logout': return LogOut
+      case 'delete': return Trash2
+      case 'add': return UserPlus
+      case 'admin': return Shield
+      default: return null
+    }
+  }
+
+  const IconComponent = getIcon()
 
   return (
     <button 
@@ -31,7 +45,7 @@ export function SubmitButton({
         </>
       ) : (
         <>
-          {Icon && <Icon size={20} />}
+          {IconComponent && <IconComponent size={20} />}
           <span>{children}</span>
         </>
       )}

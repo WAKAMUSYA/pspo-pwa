@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import { ChevronLeft, Save, Shield } from 'lucide-react'
-import { SubmitButton } from '@/components/SubmitButton'
+import SubmitButton from '@/components/SubmitButton'
 
 export default async function MemberEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: memberId } = await params
@@ -101,7 +101,7 @@ export default async function MemberEditPage({ params }: { params: Promise<{ id:
 
           <SubmitButton 
             className="w-full py-4 bg-gray-900 hover:bg-black text-white font-bold rounded-2xl shadow-lg transition-all"
-            icon={Save}
+            icon="save"
           >
             設定を保存する
           </SubmitButton>
