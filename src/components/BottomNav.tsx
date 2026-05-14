@@ -20,8 +20,8 @@ export default function BottomNav() {
   if (pathname === '/login' || pathname === '/signup' || pathname === '/tutorial') return null
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-t border-gray-100 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
-      <div className="flex justify-around items-center h-20">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-t border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.04)]">
+      <div className="flex justify-around items-center h-20 pt-1 pb-[calc(env(safe-area-inset-bottom)+12px)]">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
           const Icon = item.icon
