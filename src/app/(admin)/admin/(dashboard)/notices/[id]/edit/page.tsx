@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft, Save, Trash2 } from 'lucide-react'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function EditNoticePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -101,10 +102,12 @@ export default async function EditNoticePage({ params }: { params: Promise<{ id:
           </label>
         </div>
 
-        <button type="submit" className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-2xl shadow-lg shadow-amber-100 transition-all flex items-center justify-center space-x-2">
-          <Save size={20} />
-          <span>変更を保存する</span>
-        </button>
+        <SubmitButton 
+          className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-2xl shadow-lg shadow-amber-100 transition-all"
+          icon={Save}
+        >
+          変更を保存する
+        </SubmitButton>
       </form>
     </div>
   )

@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft, Save } from 'lucide-react'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function NewNoticePage() {
   await protectAdminRoute()
@@ -78,10 +79,12 @@ export default async function NewNoticePage() {
           </label>
         </div>
 
-        <button type="submit" className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-2xl shadow-lg shadow-amber-100 transition-all flex items-center justify-center space-x-2">
-          <Save size={20} />
-          <span>お知らせを保存・公開</span>
-        </button>
+        <SubmitButton 
+          className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-2xl shadow-lg shadow-amber-100 transition-all"
+          icon={Save}
+        >
+          お知らせを保存・公開
+        </SubmitButton>
       </form>
     </div>
   )
