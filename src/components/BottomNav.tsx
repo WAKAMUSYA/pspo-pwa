@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Bell, Calendar, Stamp, User } from 'lucide-react'
+import { Home, Bell, Calendar, Stamp, User, Map, Gift } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { name: 'ホーム', href: '/', icon: Home },
-  { name: 'お知らせ', href: '/notices', icon: Bell },
-  { name: 'イベント', href: '/events', icon: Calendar },
-  { name: 'スタンプ', href: '/stamps', icon: Stamp },
-  { name: 'マイページ', href: '/mypage', icon: User },
+  { name: 'PSPO MAP', href: '/map', icon: Map },
+  { name: '会員証', href: '/card', icon: User },
+  { name: '特典', href: '/benefits', icon: Gift },
+  { name: 'マイページ', href: '/settings', icon: User },
 ]
 
 export default function BottomNav() {
