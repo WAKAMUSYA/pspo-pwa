@@ -12,10 +12,11 @@ export default async function MyPage() {
   const { data, error: authError } = await supabase.auth.getUser()
   const user = data?.user
 
-  if (authError || !user) {
-    console.error('MyPage Auth Error:', authError)
-    redirect('/login')
-  }
+  // 開発用バイパスのためコメントアウト
+  // if (authError || !user) {
+  //   console.error('MyPage Auth Error:', authError)
+  //   redirect('/login')
+  // }
 
   // 2. プロフィール情報の取得
   const { data: profile, error: profileError } = await supabase

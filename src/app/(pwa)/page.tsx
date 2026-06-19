@@ -27,9 +27,10 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user) {
-    redirect('/login')
-  }
+  // 開発用バイパスのためコメントアウト
+  // if (!user) {
+  //   redirect('/login')
+  // }
 
   // Use dummy user name for the greeting
   const userName = "田村";

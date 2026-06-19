@@ -19,6 +19,8 @@ export default function AdminDashboard() {
   const supabase = createClient()
 
   const handleLogout = async () => {
+    // 一時的なバイパス用のクッキーを削除
+    document.cookie = 'admin_bypass=; path=/; max-age=0'
     await supabase.auth.signOut()
     router.push('/admin/login')
     router.refresh()

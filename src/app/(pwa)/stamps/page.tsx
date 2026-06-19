@@ -8,9 +8,10 @@ export default async function StampsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect('/login');
-  }
+  // 開発用バイパスのためコメントアウト
+  // if (!user) {
+  //   redirect('/login');
+  // }
 
   const { data: profile } = await supabase
     .from('profiles')

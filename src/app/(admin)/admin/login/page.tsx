@@ -20,38 +20,9 @@ export default function AdminLoginPage() {
     setLoading(true)
     setError(null)
 
-    // 1. サインイン
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (authError) {
-      setError('ログインに失敗しました。メールアドレスとパスワードを確認してください。')
-      setLoading(false)
-      return
-    }
-
-    if (authData.user) {
-      // 2. ロール（権限）の確認
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', authData.user.id)
-        .single()
-
-      if (profileError || !profile || (profile.role !== 'admin' && profile.role !== 'staff')) {
-        // 管理者でない場合は即座にログアウト
-        await supabase.auth.signOut()
-        setError('管理者権限がありません。')
-        setLoading(false)
-        return
-      }
-
-      // 3. 管理画面へ
-      router.push('/admin')
-      router.refresh()
-    }
+    // 開発用：Supabase連携を切断し、ボタンを押したら無条件でログイン成功とする
+    document.cookie = 'admin_bypass=true; path=/; max-age=86400'
+    window.location.href = '/admin'
   }
 
   return (
@@ -77,7 +48,7 @@ export default function AdminLoginPage() {
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                   <input
-                    type="email"
+                    type="text"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

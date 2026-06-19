@@ -20,18 +20,9 @@ export default function LoginPage() {
     setLoading(true)
     setError(null)
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (error) {
-      setError('ログインに失敗しました。メールアドレスとパスワードを確認してください。')
-      setLoading(false)
-    } else {
-      router.push('/')
-      router.refresh()
-    }
+    // 開発用：Supabase連携を切断し、ボタンを押したら無条件でログイン成功とする
+    document.cookie = 'admin_bypass=true; path=/; max-age=86400'
+    window.location.href = '/'
   }
 
   return (
@@ -51,7 +42,7 @@ export default function LoginPage() {
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
-                type="email"
+                type="text"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

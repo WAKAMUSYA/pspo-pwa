@@ -41,17 +41,14 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith('/signup') &&
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    
-    // 管理画面パスの場合は管理画面ログインへ
-    if (request.nextUrl.pathname.startsWith('/admin')) {
-      url.pathname = '/admin/login'
-    } else {
-      url.pathname = '/login'
-    }
-    
-    return NextResponse.redirect(url)
+    // 開発用バイパスのため無条件で許可し、リダイレクトしない
+    // const url = request.nextUrl.clone()
+    // if (request.nextUrl.pathname.startsWith('/admin')) {
+    //   url.pathname = '/admin/login'
+    // } else {
+    //   url.pathname = '/login'
+    // }
+    // return NextResponse.redirect(url)
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're creating a new

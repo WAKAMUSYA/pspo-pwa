@@ -47,6 +47,17 @@ export default function RootLayout({
           speed={200}
           shadow="0 0 10px #facc15,0 0 5px #facc15"
         />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                  registration.unregister();
+                }
+              });
+            }
+          `
+        }} />
         {children}
       </body>
     </html>
