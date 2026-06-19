@@ -67,7 +67,7 @@ export async function createClient() {
         return builder;
       }
     };
-    return mockClient as any;
+    return mockClient as unknown as typeof client;
   }
 
   return client

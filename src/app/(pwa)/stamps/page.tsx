@@ -16,7 +16,7 @@ export default async function StampsPage() {
   const { data: profile } = await supabase
     .from('profiles')
     .select('total_stamps')
-    .eq('id', user.id)
+    .eq('id', user?.id || '')
     .single();
 
   const totalStamps = profile?.total_stamps || 0;

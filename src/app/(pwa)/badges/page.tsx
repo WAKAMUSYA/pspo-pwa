@@ -9,7 +9,7 @@ export default async function BadgesPage() {
   const { data: userBadges } = await supabase
     .from('user_badges')
     .select('badge_id')
-    .eq('profile_id', user?.id)
+    .eq('profile_id', user?.id || '')
 
   const earnedBadgeIds = new Set(userBadges?.map(ub => ub.badge_id) || [])
 

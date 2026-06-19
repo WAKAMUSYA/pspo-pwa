@@ -44,7 +44,7 @@ export default async function MemberListPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {members?.map((member) => (
+              {members?.map((member: any) => (
                 <tr key={member.id} className="hover:bg-gray-50/50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">

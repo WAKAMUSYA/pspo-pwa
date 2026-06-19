@@ -32,7 +32,7 @@ export default async function AdminEventsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {events?.map((event) => (
+        {events?.map((event: any) => (
           <div key={event.id} className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:border-emerald-200 transition-all">
             <div className="h-32 bg-emerald-50 relative">
               <div className="absolute top-4 left-4 flex gap-2">

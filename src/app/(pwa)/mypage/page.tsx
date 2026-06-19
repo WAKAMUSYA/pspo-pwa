@@ -22,7 +22,7 @@ export default async function MyPage() {
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', user.id)
+    .eq('id', user?.id || '')
     .single()
 
   if (profileError) {
@@ -43,7 +43,7 @@ export default async function MyPage() {
         </div>
         <div>
           <h1 className="text-xl font-bold text-gray-900">{profile?.full_name || 'メンバー'} 様</h1>
-          <p className="text-sm text-gray-400">{user.email}</p>
+          <p className="text-sm text-gray-400">{user?.email || 'admin@pspo.jp'}</p>
         </div>
       </header>
 

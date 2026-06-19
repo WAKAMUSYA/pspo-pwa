@@ -32,7 +32,7 @@ export default async function AdminNoticesPage() {
       </div>
 
       <div className="grid gap-4">
-        {notices?.map((notice) => (
+        {notices?.map((notice: any) => (
           <div key={notice.id} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between group hover:border-amber-200 transition-colors">
             <div className="flex items-center gap-4">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${notice.is_published ? 'bg-green-50 text-green-600' : 'bg-gray-50 text-gray-400'}`}>
